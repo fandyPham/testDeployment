@@ -24,8 +24,8 @@ export default function Home({ pokemon }) {
       </Head>
       <h1>Fandy Test Domain</h1>
       <h2>Pokemon List</h2>
-      {/* <div className={styles.grid}>
-        {pokemon.map((pokemon) => (
+      <div className={styles.grid}>
+        {pokemon?.map((pokemon) => (
           <div className={styles.card} key={pokemon.id}>
             <Link href={`/pokemon/${pokemon.id}`}>
               <a>
@@ -38,7 +38,7 @@ export default function Home({ pokemon }) {
             </Link>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }
