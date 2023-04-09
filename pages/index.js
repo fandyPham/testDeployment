@@ -20,7 +20,7 @@ export default function Home({ pokemon }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Fandy - Pokemon List</title>
+        <title>Fandy - Pokemon List- test deploy to vercel</title>
       </Head>
       <h1>Fandy Test Domain</h1>
       <h2>Pokemon List</h2>
