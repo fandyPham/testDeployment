@@ -24,7 +24,9 @@ jobs:
       - name: Build and Deploy
         run: |
           yarn build
-          npx gh-pages -d dist
-        env: 
-          CI: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to GH Pages 🚀
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
