@@ -23,7 +23,8 @@ jobs:
 
       - name: Build and Deploy
         run: |
-          yarn build-and-deploy:npx gh-pages -d dist
+          yarn build
+          npx gh-pages -d dist
         env: 
           CI: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
