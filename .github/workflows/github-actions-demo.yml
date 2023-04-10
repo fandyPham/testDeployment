@@ -1,35 +1,22 @@
-name: deployment code
-run-name: ${{ github.actor }} GitHub Actions 🚀
-on:
+name: deployment check
+on: 
   push:
     branches:
       - main
 jobs:
-  Explore-GitHub-Actions:
+  build-deploys:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: checkout code
         uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          yarn install
-          yarn build
-          yarn export
-  deployment:
-    runs-on: ubuntu-latest
-    needs: Explore-GitHub-Actions
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: login vercel
-        run: vercel login --github ${{ secrets.VERCEL_EMAIL }} ${{ secrets.VERCEL_TOKEN}}
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      - name: build step
+        run: yarn install
+             yarn build
+             yarn export
+      - name: deploy to vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
+          vercel_org_id: ${{ secrets.ORG_ID }}
+          vercel_project_id: ${{ secrets.PROJECT_ID }}
+          github_commit_sha: ${{ github.sha }}
