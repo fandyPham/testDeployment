@@ -1,28 +1,29 @@
-name: Vercel Production Deployment
+name: Build and Deploy to GitHub Pages
 
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  VERCEL_EMAIL: ${{ secrets.VERCEL_EMAIL }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-on:
+on: 
   push:
     branches:
       - main
 
 jobs:
-  Deploy-Production:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout code
+        uses: actions/checkout@v2
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+      - name: Setup nodejs
+        uses: actions/setup-node@v2
+        with: 
+          node-version: '16'
 
-      - name: Pull Vercel Environment Information
-        run: vercel pull --github --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      - name: install dependencies
+        run: yarn install
+
+      - name: Build and Deploy
+        run: |
+          yarn build-and-deploy:npx gh-pages -d dist
+        env: 
+          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
