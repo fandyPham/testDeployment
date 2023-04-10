@@ -1,5 +1,5 @@
 name: deployment code
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} GitHub Actions 🚀
 on:
   push:
     branches:
@@ -10,20 +10,25 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} ${{ steps.deployment.outputs.page_url }} repository has been cloned to the runner."
-      # - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      # - name: List files in the repository
-      #   run: |
-      #     yarn install
-      #     yarn build
-      #     yarn export
-  # deploy:
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   runs-on: ubuntu-latest
-  #   needs: Explore-GitHub-Actions
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v1
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          yarn install
+          yarn build
+          yarn export
+  Deploy-Production:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
