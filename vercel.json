@@ -2,9 +2,9 @@
   "git": {
     "deploymentEnabled": {
       "main": true
-    },
-    "github": {
-      "autoAlias" : true
     }
+  },
+  "github": {
+    "enabled": false
   }
 }
