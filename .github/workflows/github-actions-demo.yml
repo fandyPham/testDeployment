@@ -4,19 +4,43 @@ on:
     branches:
       - main
 jobs:
-  build-deploys:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        run: yarn install
-      - name: Build project
-        run: yarn build
-      - name: deploy to vercel
-        uses: amondnet/vercel-action@v20
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with: 
+          node-version: '18'
+
+      - run: yarn install
+      - run: yarn build
+
+      # - uses: amondnet/vercel-action@v20
+      # - with:
+      #     vercel_token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel_org_id: ${{ secrets.ORG_ID }}
+      #     vercel_project_id: ${{ secrets.PROJECT_ID }}
+      #     github_commit_sha: ${{ github.sha }}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: startdeployment
+        uses: bobheadxi/deployment@1.4
+      
+      - uses: actions/checkout@v2
+
+      - uses: amondnet/vercel-action@v20
         with:
           vercel_token: ${{ secrets.VERCEL_TOKEN }}
           vercel_org_id: ${{ secrets.ORG_ID }}
           vercel_project_id: ${{ secrets.PROJECT_ID }}
-          github_commit_sha: ${{ github.sha }}
+          scope: ${{ secrets.ORG_ID }}
+          working-direction: ./
+      
+      - name: update deployment
+        uses: bobheadxi/deployment@1.4
+        if: always()
+        with:
+          step: finish
