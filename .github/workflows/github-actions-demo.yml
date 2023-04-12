@@ -151,6 +151,10 @@ jobs:
   deploy:
     # Add a dependency to the build job
     needs: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     # Deploy to the github-pages environment
