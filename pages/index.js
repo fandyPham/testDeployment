@@ -22,7 +22,7 @@ export default function Home({ pokemon }) {
       <Head>
         <title>Fandy - Pokemon List- test deploy to vercel</title>
       </Head>
-      <h1>Fandy Test Domain - Pokemon List- no need to build</h1>
+      <h1>Fandy Test Domain - Pokemon List- latest</h1>
       <h2>Pokemon List</h2>
       <div className={styles.grid}>
         {pokemon?.map((pokemon) => (

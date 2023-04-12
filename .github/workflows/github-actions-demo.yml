@@ -61,13 +61,22 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Build project
-        run: yarn build 
+        run: yarn build && yarn export
       - name: deploy to vercel
         uses: amondnet/vercel-action@v20
+        # with:
+        #   vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        #   vercel-org-id: ${{ secrets.ORG_ID }}
+        #   vercel-project-id: ${{ secrets.PROJECT_ID }}
+        #   build: false
+        #   entrypoint: .next/ || out/
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-          build: false
-          entrypoint: .next/ || out/
+          args: deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --scope ${{ secrets.VERCEL_ORG_ID }} --entry-point out/ || .next/
+
+      - name: Promote deployment to production
+        uses: amondnet/vercel-action@v20
+        with:
+          args: alias ${{ env.DEPLOYMENT_ID }} --prod
+        env:
+          DEPLOYMENT_ID: ${{ steps.deploy.outputs.vercel_deployment_id }}
 
