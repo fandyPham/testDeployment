@@ -58,10 +58,10 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v3
-      - name: Install dependencies
-        run: yarn install
-      - name: Build project
-        run: yarn build
+      # - name: Install dependencies
+      #   run: yarn install
+      # - name: Build project
+      #   run: yarn build
       - name: deploy to vercel
         uses: amondnet/vercel-action@v20
         with:
