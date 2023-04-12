@@ -170,5 +170,5 @@ jobs:
         uses: actions/deploy-pages@v2
         with:
           folder: .
-          # token: ${{ secrets.GITHUB_TOKEN }}
-          artifact-name: build-artifact
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifact_name: build-artifact
