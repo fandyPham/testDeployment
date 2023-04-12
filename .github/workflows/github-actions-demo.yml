@@ -142,6 +142,11 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: out
+          path: out
   # Deploy job
   deploy:
     # Add a dependency to the build job
