@@ -61,13 +61,13 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Build project
-        run: yarn build && yarn export
-      # - name: vercel build prod 
-      #   run: vercel build --prod
+        run: yarn build 
       - name: deploy to vercel
         uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID }}
           vercel-project-id: ${{ secrets.PROJECT_ID }}
-          prod: true
+          build: false
+          entrypoint: .next/ || out/
+
