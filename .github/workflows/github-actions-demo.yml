@@ -58,31 +58,31 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v3
-      - name: Install dependencies
-        run: yarn install
-      - name: Build project
-        run: yarn build && yarn export
-      - name: deploy to vercel
-        uses: amondnet/vercel-action@v20
+      # - name: Install dependencies
+      #   run: yarn install
+      # - name: Build project
+      #   run: yarn build && yarn export
+      # - name: deploy to vercel
+      #   uses: amondnet/vercel-action@v20
         # with:
         #   vercel-token: ${{ secrets.VERCEL_TOKEN }}
         #   vercel-org-id: ${{ secrets.ORG_ID }}
         #   vercel-project-id: ${{ secrets.PROJECT_ID }}
         #   build: false
         #   entrypoint: .next/ || out/
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-          args: deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --scope ${{ secrets.ORG_ID }} --entry-point out/ || .next/
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.ORG_ID }}
+      #     vercel-project-id: ${{ secrets.PROJECT_ID }}
+      #     args: deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --scope ${{ secrets.ORG_ID }} --entry-point out/ || .next/
 
-      - name: Promote deployment to production
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-          args: alias ${{ env.DEPLOYMENT_ID }} --prod
-        env:
-          DEPLOYMENT_ID: ${{ steps.deploy.outputs.vercel_deployment_id }}
+      # - name: Promote deployment to production
+      #   uses: amondnet/vercel-action@v20
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.ORG_ID }}
+      #     vercel-project-id: ${{ secrets.PROJECT_ID }}
+      #     args: alias ${{ env.DEPLOYMENT_ID }} --prod
+      #   env:
+      #     DEPLOYMENT_ID: ${{ steps.deploy.outputs.vercel_deployment_id }}
 
