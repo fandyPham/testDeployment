@@ -79,6 +79,9 @@ jobs:
       - name: Promote deployment to production
         uses: amondnet/vercel-action@v20
         with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
           args: alias ${{ env.DEPLOYMENT_ID }} --prod
         env:
           DEPLOYMENT_ID: ${{ steps.deploy.outputs.vercel_deployment_id }}
