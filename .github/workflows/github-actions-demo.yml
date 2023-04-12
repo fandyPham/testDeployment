@@ -71,7 +71,10 @@ jobs:
         #   build: false
         #   entrypoint: .next/ || out/
         with:
-          args: deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --scope ${{ secrets.VERCEL_ORG_ID }} --entry-point out/ || .next/
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          args: deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --scope ${{ secrets.ORG_ID }} --entry-point out/ || .next/
 
       - name: Promote deployment to production
         uses: amondnet/vercel-action@v20
