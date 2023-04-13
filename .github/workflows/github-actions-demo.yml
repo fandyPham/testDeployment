@@ -145,9 +145,9 @@ jobs:
       - name: Static HTML export with Next.js
         run: yarn export
       - run: ls
-      - run : echo "Unable"
-      - run: cd ../ && ls
-      - run : echo "Unable"
+      - run : echo "able"
+      # - run: cd ../ && ls
+      # - run : echo "Unable"
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
