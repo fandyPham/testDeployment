@@ -149,8 +149,8 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: out/ .next/ build/ .next/ out/
-          name: build-artifact
+          path: ./out
+          # name: build-artifact
   # Deploy job
   deploy:
     # Add a dependency to the build job
@@ -175,7 +175,7 @@ jobs:
         with:
           folder: .
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifact_name: build-artifact
+          # artifact_name: build-artifact
 
 
 # Sample workflow for building and deploying a Next.js site to GitHub Pages
