@@ -214,11 +214,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-        with:
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v3
+      #   with:
 
-          static_site_generator: next
+      #     static_site_generator: next
       - name: Install dependencies
         run: yarn install
       - name: Build with Next.js
