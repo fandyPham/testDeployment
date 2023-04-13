@@ -143,11 +143,10 @@ jobs:
       - name: Build
         run: npm run build
       - name: Static HTML export with Next.js
-        run: next export
+        run: yarn export
       - run: ls
       - run : echo "Unable"
-      - run: cd ../
-      - run: ls
+      - run: cd ../ && ls
       - run : echo "Unable"
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
