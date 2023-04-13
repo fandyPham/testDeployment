@@ -151,7 +151,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          path: ./out  || ./.next || /build ||.next
+          path: ./out  || ./.next || /build || .next || out || out/
           name: build-artifact
   # Deploy job
   deploy:
