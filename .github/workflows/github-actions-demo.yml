@@ -133,11 +133,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
+      - 
+        name: Checkout Code
+        uses: actions/checkout@v3
+      # - name: Install Node.js
+        # uses: actions/setup-node@v2
+        # with:
+        #   node-version: '16.x'
       # - name: Install Dependencies
       #   run: npm install
       # - name: Build
@@ -176,6 +178,7 @@ jobs:
   #         folder: .
   #         token: ${{ secrets.GITHUB_TOKEN }}
           # artifact_name: build-artifact
+
 
   docker:
     runs-on: ubuntu-latest
