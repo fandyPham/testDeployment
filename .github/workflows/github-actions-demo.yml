@@ -204,7 +204,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{secrets.DOCKERHUB_REPO}}:latest
 
 
 # Sample workflow for building and deploying a Next.js site to GitHub Pages
