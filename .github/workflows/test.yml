@@ -2,7 +2,7 @@ name: github build on test flow
 on:
   push:
     branches:
-      - main
+      - test
 jobs:
   build:
     runs-on: ubuntu-latest
