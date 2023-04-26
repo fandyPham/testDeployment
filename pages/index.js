@@ -8,7 +8,6 @@ export async function getStaticProps() {
   const resp = await fetch(
     "https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json"
   );
-
   return {
     props: {
       pokemon: await resp.json(),
@@ -17,6 +16,8 @@ export async function getStaticProps() {
 }
 
 export default function Home({ pokemon }) {
+  console.log(process.env.NEXT_PUBLIC_ANALYTICS_ID, "mii");
+
   return (
     <div className={styles.container}>
       <Head>
@@ -24,6 +25,8 @@ export default function Home({ pokemon }) {
       </Head>
       <h1>Fandy Test Domain - Pokemon List - vvv</h1>
       <h2>Pokemon List</h2>
+      <h2>{process.env.NEXT_PUBLIC_ANALYTICS_ID}</h2>
+
       <div className={styles.grid}>
         {pokemon?.map((pokemon) => (
           <div className={styles.card} key={pokemon.id}>
