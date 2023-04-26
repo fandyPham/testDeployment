@@ -1,8 +1,13 @@
 name: github build on test flow
 on:
-  push:
+  # push:
+  #   branches:
+  #     - test
+  pull_request:
+    types:
+      - opened
     branches:
-      - test
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
