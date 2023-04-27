@@ -1,3 +1,40 @@
+
+#  deploy to github pages 
+# name: Github Production Deployment
+name: github Production Deployment
+on:
+  push:
+    branches:
+      - main
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    needs: build
+    steps: 
+      -
+        uses: actions/checkout@v3
+        # pull repository states to runner
+        name: checkout
+      - 
+        name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      -
+        name: Set up docker
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{secrets.DOCKERHUB_REPO}}
+
+
 # # name: deployment check
 # # on: 
 # #   push:
@@ -120,91 +157,6 @@
   #   steps:
       # - name: Deploy Project Artifacts to Vercel
       #   run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-
-
-#  deploy to github pages 
-# name: Github Production Deployment
-name: github Production Deployment
-on:
-  push:
-    branches:
-      - main
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - 
-        name: Checkout Code
-        uses: actions/checkout@v3
-      # - name: Install Node.js
-        # uses: actions/setup-node@v2
-        # with:
-        #   node-version: '16.x'
-      # - name: Install Dependencies
-      #   run: npm install
-      # - name: Build
-      #   run: npm run build
-      # - name: Static HTML export with Next.js
-      #   run: yarn export
-      # - run: ls
-      # - run : echo "able"
-      # - name: Upload Artifact
-      #   uses: actions/upload-pages-artifact@v1
-      #   with:
-      #     path: ./out
-          # name: build-artifact
-  # Deploy job
-  # deploy:
-  #   # Add a dependency to the build job
-  #   needs: build
-  #   permissions:
-  #     contents: read
-  #     pages: write
-  #     id-token: write
-
-  #   # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-  #   # Deploy to the github-pages environment
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-
-  #   # Specify runner + deployment step
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v1
-  #       with:
-  #         folder: .
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-          # artifact_name: build-artifact
-
-
-  docker:
-    runs-on: ubuntu-latest
-    needs: build
-    steps: 
-      -
-        uses: actions/checkout@v3
-        name: checkout
-      - 
-        name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      -
-        name: Set up docker
-        uses: docker/setup-buildx-action@v2
-      -
-        name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{secrets.DOCKERHUB_REPO}}
 
 
 # Sample workflow for building and deploying a Next.js site to GitHub Pages

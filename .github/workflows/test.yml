@@ -1,49 +1,63 @@
 name: github build on test flow
+
+# event trigger in workflow 
 on:
   push:
     branches:
       - test
+  # pull_request:
+  #   types:
+  #     - opened
+  #   branches:
+  #     - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  # workflow_dispatch:
+
+# permissions:
+#   contents: read
+#   pages: write
+#   id-token: write
+
+# Allow one concurrent deployment
+# concurrency:
+#   group: "pages"
+#   cancel-in-progress: true
+
 jobs:
+  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
-      - 
-        name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v3
-      - name: Install Node.js
-        uses: actions/setup-node@v2
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-      - name: Install Dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Upload Artifact
+          node-version: "16"
+      - name: Install dependencies && build
+        run: yarn install && yarn build
+      # - name: Build with Next.js
+      #   run: yarn build
+      - name: Static HTML export with Next.js
+        run: yarn export
+      - run: ls
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
-          name: build-artifact
-  deploy:
-    # Add a dependency to the build job
-    needs: build
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
 
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    # Deploy to the github-pages environment
+  # Deployment job
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-        with:
-          folder: .
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifact_name: build-artifact
+
+#  "uses": is actions already exist on github marketplace is contributed by github communications, we can also use this instead of writing code
+#  need to upload to github storage, on the other hand, gitlab no need to upload this because GitLab automatically saves the artifacts produced by a job as long as you specify them using the artifacts keyword
