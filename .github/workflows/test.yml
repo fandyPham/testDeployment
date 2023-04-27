@@ -14,7 +14,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   # workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
@@ -30,17 +29,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      # - name: Checkout
+      #   uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-      # - name: Setup Pages
-      #   uses: actions/configure-pages@v3
-      #   with:
-
-      #     static_site_generator: next
       - name: Install dependencies
         run: yarn install
       - name: Build with Next.js
@@ -64,3 +58,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+
+#  "uses": is actions already exist on github marketplace is contributed by github communications, we can also use this instead of writing code
+#  need to upload to github storage, on the other hand, gitlab no need to upload this because GitLab automatically saves the artifacts produced by a job as long as you specify them using the artifacts keyword
