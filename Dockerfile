@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install
 
-# Copy the rest of the application files to the container
+# Copy the rest of the application files in where the Dockerfile is located to the container working /mmm
 COPY . .
 
 # Build the Next.js application
